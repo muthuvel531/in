@@ -369,6 +369,17 @@
                 { percent: "20%", text: "Plumbing Deal", note: "Limited time" },
                 { percent: "30%", text: "Today's Special", note: "All services" }
             ];
+            <div className="offer-card-container">
+                <div className="offer-slider">
+                    {offers.map((o, i) => (
+                    <div className="offer-card" key={i}>
+                        <h1>{o.percent}</h1>
+                        <p>{o.text}</p>
+                        <span>{o.note}</span>
+                        <i className="fa-solid fa-gift"></i>
+                    </div>
+                    ))}
+                </div>
             const [username, setUsername] = React.useState("");
 
             React.useEffect(() => {
@@ -376,7 +387,7 @@
                 if (name) setUsername(name);
                
             }, []);
-
+<h3 className="username">{username}</h3>
             return (
                 <div className="app">
                     <div className="top-bar">
@@ -452,15 +463,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Services App</title>
 
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         * {
@@ -510,7 +518,7 @@
             color: #aaa;
         }
 
-        .header h2 {
+        .header h3 {
             font-size: 18px;
         }
 
@@ -535,14 +543,10 @@
             border: none;
             outline: none;
             color: #fff;
-            margin-left: 10px;
+            margin: 0 10px;
         }
 
-        .search i {
-            color: #777;
-        }
-
-        /* SECTION TITLE */
+        /* SECTION */
         .section {
             display: flex;
             justify-content: space-between;
@@ -555,38 +559,65 @@
             font-size: 13px;
         }
 
-        /* OFFER */
-        .offer {
-            background: linear-gradient(135deg, #a855f7, #7c3aed);
-            border-radius: 20px;
-            padding: 18px;
-            display: flex;
-            align-items: center;
+        /* OFFER SLIDER */
+        .offer-card-container {
+            overflow: hidden;
             margin-bottom: 18px;
         }
 
-        .offer-text {
-            flex: 1;
+        .offer-slider {
+            display: flex;
+            gap: 12px;
+            width: max-content;
+            animation: slide 12s linear infinite;
         }
 
-        .offer-text h1 {
+        .offer-slider:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .offer-card {
+            width: 240px;
+            height: 130px;
+            background: linear-gradient(45deg, #883aff, #5146ff);
+            border-radius: 18px;
+            padding: 16px;
+            position: relative;
+        }
+
+        .offer-card h1 {
             font-size: 32px;
         }
 
-        .offer-text p {
-            font-size: 13px;
-            margin: 6px 0;
+        .offer-card p {
+            font-size: 14px;
         }
 
-        .offer img {
-            width: 100px;
-            border-radius: 14px;
+        .offer-card span {
+            font-size: 12px;
+        }
+
+        .offer-card i {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
         }
 
         /* SERVICES */
         .services {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
         }
 
@@ -649,11 +680,6 @@
             color: #22d3ee;
         }
 
-        .gray {
-            background: #2a2a2a;
-            color: #aaa;
-        }
-
         /* BOTTOM NAV */
         .bottom-nav {
             position: fixed;
@@ -672,29 +698,25 @@
         .bottom-nav div {
             text-align: center;
             font-size: 11px;
-            color: #777;
         }
 
         .bottom-nav i {
             font-size: 18px;
         }
-
-        .active {
-            color: #8b5cf6;
-        }
     </style>
 </head>
 
 <body>
+
     <div class="app">
 
         <!-- HEADER -->
         <div class="header">
             <div class="profile">
-                <img src="https://i.pravatar.cc/100" alt="">
+                <img src="https://i.pravatar.cc/100">
                 <div>
                     <h4>Good Morning 👋</h4>
-                    <h2>Andrew Ainsley</h2>
+                    <h3 id="username">Guest</h3>
                 </div>
             </div>
             <div class="icons">
@@ -706,7 +728,7 @@
         <!-- SEARCH -->
         <div class="search">
             <i class="fa fa-search"></i>
-            <input placeholder="Search">
+            <input placeholder="Search services">
             <i class="fa fa-sliders"></i>
         </div>
 
@@ -716,13 +738,8 @@
             <span>See All</span>
         </div>
 
-        <div class="offer">
-            <div class="offer-text">
-                <h1>30%</h1>
-                <p>Today's Special!</p>
-                <small>Get discount for every order, only valid today</small>
-            </div>
-            <img src="https://images.unsplash.com/photo-1581579185169-1c7b8b86a5c3" alt="">
+        <div class="offer-card-container">
+            <div class="offer-slider" id="offerSlider"></div>
         </div>
 
         <!-- SERVICES -->
@@ -730,7 +747,7 @@
             <h3>Services</h3>
             <span>See All</span>
         </div>
-
+        
         <div class="services">
             <div class="service">
                 <div class="purple"><i class="fa fa-broom"></i></div>
@@ -740,10 +757,7 @@
                 <div class="orange"><i class="fa fa-screwdriver-wrench"></i></div>
                 <p>Repairing</p>
             </div>
-            <div class="service">
-                <div class="blue"><i class="fa fa-paint-roller"></i></div>
-                <p>Painting</p>
-            </div>
+           
             <div class="service">
                 <div class="yellow"><i class="fa fa-soap"></i></div>
                 <p>Laundry</p>
@@ -757,27 +771,46 @@
                 <p>Plumbing</p>
             </div>
             <div class="service">
-                <div class="cyan"><i class="fa fa-truck"></i></div>
-                <p>Shifting</p>
+                <div class="blue"><i class="fa fa-house-medical"></i></div>
+                <p>Home Care</p>
+            </div>
+            
+        </div>
+        
+        </div>
+        <!-- <div class="section">
+            <h3>Services</h3>
+            <span>See All</span>
+        </div>
+
+        <div class="services">
+            <div class="service">
+                <div class="purple"><i class="fa fa-broom"></i></div>
+                <p>Cleaning</p>
             </div>
             <div class="service">
-                <div class="gray"><i class="fa fa-ellipsis"></i></div>
-                <p>More</p>
+                <div class="orange"><i class="fa fa-screwdriver-wrench"></i></div>
+                <p>Repair</p>
+            </div>
+            <div class="service">
+                <div class="green"><i class="fa fa-faucet"></i></div>
+                <p>Plumbing</p>
+            </div>
+            <div class="service">
+                <div class="cyan"><i class="fa fa-house-medical"></i></div>
+                <p>Home Care</p>
             </div>
         </div>
 
-    </div>
+    </div> -->
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
-        <div class="active"><i class="fa fa-house"></i>
+        <div><i class="fa fa-house"></i>
             <p>Home</p>
         </div>
         <div><i class="fa fa-list"></i>
             <p>Bookings</p>
-        </div>
-        <div><i class="fa fa-calendar"></i>
-            <p>Calendar</p>
         </div>
         <div><i class="fa fa-envelope"></i>
             <p>Inbox</p>
@@ -788,10 +821,35 @@
     </div>
 
     <script>
-        // JS ready for future interactions
-        console.log("App Loaded");
-    </script>
-</body>
+        /* Username */
+        const name = localStorage.getItem("username");
+        if (name) {
+            document.getElementById("username").innerText = name;
+        }
 
+        /* Offers */
+        const offers = [
+            { percent: "30%", text: "Today's Special", note: "All services" },
+            { percent: "25%", text: "Weekend Offer", note: "Cleaning only" },
+            { percent: "20%", text: "Plumbing Deal", note: "Limited time" },
+        ];
+
+        const slider = document.getElementById("offerSlider");
+
+        /* duplicate for infinite scroll */
+        [...offers, ...offers].forEach(o => {
+            const card = document.createElement("div");
+            card.className = "offer-card";
+            card.innerHTML = `
+        <h1>${o.percent}</h1>
+        <p>${o.text}</p>
+        <span>${o.note}</span>
+        <i class="fa-solid fa-gift"></i>
+    `;
+            slider.appendChild(card);
+        });
+    </script>
+
+</body>
 
 </html>
