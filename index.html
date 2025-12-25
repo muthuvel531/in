@@ -225,6 +225,9 @@
             font-size: 11px;
             cursor: pointer;
         }
+         .bottom-nav div:hover{
+            color:#883aff;
+         }
 
         .bottom-nav i {
             font-size: 18px;
@@ -253,6 +256,7 @@ top:300px;
 
   .app {
     padding: 16px;
+    padding-bottom: 110px; /* space for bottom nav */
   }
 
   /* SEARCH */
@@ -270,8 +274,7 @@ top:300px;
   .offer-slider {
     display: flex;
     gap: 14px;
-     animation: slide 12s linear infinite;
-    /* better for phone */
+    animation: slide 12s linear infinite;
   }
 
   .offer-card {
@@ -279,22 +282,31 @@ top:300px;
     height: 140px;
   }
 
-  /* SERVICES → 2 columns on phone */
+  /* SERVICES */
   .services {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 24px;
     margin-top: 8px;
+    margin-bottom: 0px;
+    justify-items: center;
   }
 
+  /* Center last row automatically */
   .service {
+    width: 100%;
     text-align: center;
-    cursor: pointer;
   }
 
   .service div {
     width: 64px;
     height: 64px;
+  }
+
+  /* If services count is 5 → center last two */
+  .services .service:nth-last-child(1),
+  .services .service:nth-last-child(2) {
+    grid-column: span 1;
   }
 
   /* BOTTOM NAV */
@@ -304,15 +316,16 @@ top:300px;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 100%;
-    height: 64px;
+    height: 74px;
     background: #15161c;
     display: flex;
     justify-content: space-around;
     align-items: center;
     border-radius: 18px 18px 0 0;
+    z-index: 1000;
   }
 }
+
 @media (min-width: 769px) and (max-width: 1023px) {
   .services {
     grid-template-columns: repeat(3, 1fr);
